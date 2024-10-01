@@ -15,4 +15,4 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 # flutter_fittApp
-<img src="./assets/appCapture.png" align="center" style="width: 100%" />
+<img src="./assets/appCapture.png" align="center" style="width: 50%" />
