@@ -1,9 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:fitness/Components/app_bar.dart';
+// Modelos
 import 'package:fitness/Models/category_model.dart';
 import 'package:fitness/Models/diet_model.dart';
 import 'package:fitness/Models/popular_model.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fitness/Components/app_bar.dart';
+import 'package:fitness/Models/recipe_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -59,82 +62,86 @@ class _HomePageState extends State<HomePage> {
 
   Column _popularSection() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Text(
-              'Popular',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
-          const SizedBox(height: 15,),
-          ListView.separated(
-            shrinkWrap: true,
-            separatorBuilder: (context, index) => const SizedBox(height: 15,),
-            itemCount: popularModels.length,
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            itemBuilder: (context, index) {
-              return Container(
-                height: 100,
-                decoration: BoxDecoration(
-                    color: popularModels[index].boxIsSelected
-                        ? Colors.white
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: popularModels[index].boxIsSelected
-                        ? [
-                            BoxShadow(
-                                color:
-                                    const Color(0xff1d1617).withOpacity(0.07),
-                                offset: const Offset(0, 10),
-                                blurRadius: 40,
-                                spreadRadius: 0)
-                          ]
-                        : []),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      const Padding(
+        padding: EdgeInsets.only(left: 20),
+        child: Text(
+          'Popular',
+          style: TextStyle(
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
+        ),
+      ),
+      const SizedBox(
+        height: 15,
+      ),
+      ListView.separated(
+        shrinkWrap: true,
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 15,
+        ),
+        itemCount: popularModels.length,
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        itemBuilder: (context, index) {
+          return Container(
+            height: 100,
+            decoration: BoxDecoration(
+                color: popularModels[index].boxIsSelected
+                    ? Colors.white
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: popularModels[index].boxIsSelected
+                    ? [
+                        BoxShadow(
+                            color: const Color(0xff1d1617).withOpacity(0.07),
+                            offset: const Offset(0, 10),
+                            blurRadius: 40,
+                            spreadRadius: 0)
+                      ]
+                    : []),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SvgPicture.asset(
+                  popularModels[index].iconPath,
+                  width: 65,
+                  height: 65,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SvgPicture.asset(
-                      popularModels[index].iconPath,
-                      width: 65,
-                      height: 65,
+                    Text(
+                      popularModels[index].name,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 16),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          popularModels[index].name,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 16),
-                        ),
-                        Text(
-                          '${popularModels[index].level} | ${popularModels[index].duration} | ${popularModels[index].calorie}',
-                          style: const TextStyle(
-                              color: Color(0xff7b6f72),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ],
+                    Text(
+                      '${popularModels[index].level} | ${popularModels[index].duration} | ${popularModels[index].calorie}',
+                      style: const TextStyle(
+                          color: Color(0xff7b6f72),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400),
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: SvgPicture.asset(
-                        'assets/icons/button.svg',
-                        width: 30,
-                        height: 30,
-                      ),
-                    )
                   ],
                 ),
-              );
-            },
-          )
-        ]);
+                GestureDetector(
+                  onTap: () => Modular.to.pushNamed('/recipe',
+                      arguments: Recipe(
+                          name: popularModels[index].name,
+                          iconPath: popularModels[index].iconPath)),
+                  child: SvgPicture.asset(
+                    'assets/icons/button.svg',
+                    width: 30,
+                    height: 30,
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      )
+    ]);
   }
 
   Column _dietSection() {
@@ -198,14 +205,20 @@ class _HomePageState extends State<HomePage> {
                           ]),
                           borderRadius: BorderRadius.circular(50)),
                       child: Center(
-                        child: Text(
-                          'View',
-                          style: TextStyle(
-                              color: diets[index].viewIsSelected
-                                  ? Colors.white
-                                  : const Color(0xffc58bf2),
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14),
+                        child: TextButton(
+                          onPressed: () => Modular.to.pushNamed('/recipe',
+                              arguments: Recipe(
+                                  name: diets[index].name,
+                                  iconPath: diets[index].iconPath)),
+                          child: Text(
+                            'View',
+                            style: TextStyle(
+                                color: diets[index].viewIsSelected
+                                    ? Colors.white
+                                    : const Color(0xffc58bf2),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14),
+                          ),
                         ),
                       ),
                     )

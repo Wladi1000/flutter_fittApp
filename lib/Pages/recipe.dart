@@ -1,11 +1,20 @@
+// Dependencies
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 // Components
 import 'package:fitness/Components/app_bar.dart';
 
+// Models
+import 'package:fitness/Models/recipe_model.dart';
+
+// ignore: must_be_immutable
 class RecipePage extends StatelessWidget {
-  const RecipePage({super.key});
+  Recipe recipe;
+  RecipePage({
+    super.key,
+    required this.recipe
+  });
 
   static const lorem = '''
                   Velit esse do veniam dolor minim ullamco. Elit Lorem in est ullamco laboris eu nisi elit. Dolore id aute nostrud est eiusmod ipsum occaecat ad nostrud Lorem.
@@ -44,6 +53,7 @@ Fugiat veniam commodo ullamco sunt aute non deserunt labore duis. Tempor aute in
                 'Recipe details:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+              SizedBox(height: 20,),
               Text(
                 lorem,
                 textAlign: TextAlign.justify,
@@ -148,11 +158,11 @@ Fugiat veniam commodo ullamco sunt aute non deserunt labore duis. Tempor aute in
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child:
-                          SvgPicture.asset('assets/icons/honey-pancakes.svg'),
+                          SvgPicture.asset(recipe.iconPath),
                     )),
-                const Text(
-                  'Honey Pancake',
-                  style: TextStyle(
+                Text(
+                  recipe.name,
+                  style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       color: Colors.black,
                       fontSize: 14),

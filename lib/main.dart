@@ -1,26 +1,35 @@
+import 'package:fitness/Pages/home.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 //Components
 // import 'package:fitness/Pages/home.dart';
 import 'package:fitness/Pages/recipe.dart';
 
-void main() {
-  runApp(const MyApp());
+void main(){
+  return runApp(ModularApp(module: AppModule(), child: AppWidget()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+class AppWidget extends StatelessWidget {
+  Widget build(BuildContext context){
+    return MaterialApp.router(
+      title: 'My Food Fitness App',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      routerConfig: Modular.routerConfig,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: 'Poppins'),
-      // home: const HomePage(),
-      home: const RecipePage(),
-      // home: const Placeholder(),
-    );
+    ); //added by extension 
+  }
+}
+
+class AppModule extends Module {
+  @override
+  void binds(i) {}
+
+  @override
+  void routes(r) {
+    // r.child('/', child: (context) => const Placeholder());
+    r.child('/', child: (context) => const HomePage());
+    // r.child('/home', child: (context) => const HomePage());
+    r.child('/recipe', child: (context) => RecipePage(recipe: r.args.data), transition: TransitionType.rightToLeft);
   }
 }

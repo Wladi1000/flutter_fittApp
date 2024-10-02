@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 AppBar myAppBar(BuildContext context, String title) {
@@ -12,9 +13,7 @@ AppBar myAppBar(BuildContext context, String title) {
     elevation: 0.0,
     centerTitle: true,
     leading: GestureDetector(
-        onTap: () {
-          // print("Pa tras");
-        },
+        onTap: () => Modular.to.canPop()? Modular.to.pop() : null,
         child: Container(
           margin: const EdgeInsets.all(10),
           alignment: Alignment.center,
