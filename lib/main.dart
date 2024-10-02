@@ -1,5 +1,7 @@
 import 'package:fitness/Pages/home.dart';
+import 'package:fitness/Pages/recipe.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins'),
-      home: const HomePage(),
+      // home: const HomePage(),
+      home: const RecipePage(),
     );
   }
 }
