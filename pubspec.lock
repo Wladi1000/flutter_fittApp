@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.5.0"
+  asp:
+    dependency: "direct main"
+    description:
+      name: asp
+      sha256: "43a6f16e1c012c4315a4d395d0c801e05e45f9e1d0514cc9e6514a801eb63420"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   async:
     dependency: transitive
     description:
@@ -136,6 +144,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  hook_state:
+    dependency: transitive
+    description:
+      name: hook_state
+      sha256: eed5b48b6000225b74fe53dc04281fc7f0412c3d3ad5b8e79be02fda6d6476b7
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.2"
   http:
     dependency: transitive
     description:
