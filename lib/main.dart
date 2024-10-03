@@ -1,9 +1,8 @@
-import 'package:fitness/Pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 //Components
-// import 'package:fitness/Pages/home.dart';
+import 'package:fitness/Pages/home.dart';
 import 'package:fitness/Pages/recipe.dart';
 
 void main(){
@@ -27,9 +26,7 @@ class AppModule extends Module {
 
   @override
   void routes(r) {
-    // r.child('/', child: (context) => const Placeholder());
-    r.child('/', child: (context) => const HomePage());
-    // r.child('/home', child: (context) => const HomePage());
-    r.child('/recipe', child: (context) => RecipePage(recipe: r.args.data), transition: TransitionType.rightToLeft);
+    r.child('/', child: (context) => HomePage(), duration: const Duration(milliseconds: 1000));
+    r.child('/recipe', child: (context) => RecipePage(recipe: r.args.data), transition: TransitionType.rightToLeft, duration: const Duration(milliseconds: 1000));
   }
 }
