@@ -6,10 +6,13 @@ import 'package:fitness/Pages/home.dart';
 import 'package:fitness/Pages/recipe.dart';
 
 void main(){
-  return runApp(ModularApp(module: AppModule(), child: AppWidget()));
+  return runApp(ModularApp(module: AppModule(), child: const AppWidget()));
 }
 
 class AppWidget extends StatelessWidget {
+  const AppWidget({super.key});
+
+  @override
   Widget build(BuildContext context){
     return MaterialApp.router(
       title: 'My Food Fitness App',
