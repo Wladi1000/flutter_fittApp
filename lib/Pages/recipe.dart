@@ -1,7 +1,12 @@
 // Dependencies
+import 'package:fitness/store/store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
+
+// Utils
+import 'package:fitness/utils/loremIpsum.dart';
 
 // Components
 import 'package:fitness/Components/app_bar.dart';
@@ -9,63 +14,95 @@ import 'package:fitness/Components/app_bar.dart';
 // Models
 import 'package:fitness/Models/recipe_model.dart';
 
+// Store
+import 'package:fitness/store/atoms.dart';
+
 // ignore: must_be_immutable
-class RecipePage extends StatelessWidget {
+class RecipePage extends HookWidget {
   Recipe recipe;
-  RecipePage({
-    super.key,
-    required this.recipe
-  });
+  RecipePage({super.key, required this.recipe});
 
-  static const lorem = '''
-                  Velit esse do veniam dolor minim ullamco. Elit Lorem in est ullamco laboris eu nisi elit. Dolore id aute nostrud est eiusmod ipsum occaecat ad nostrud Lorem.
-
-Cillum anim laboris laboris occaecat adipisicing. Sint incididunt fugiat aliqua labore elit commodo minim et. Magna quis elit commodo enim nostrud sit elit quis eiusmod ea qui ex. Labore exercitation enim nisi sunt et minim excepteur quis pariatur dolore incididunt elit consectetur. Fugiat velit ullamco aute ea et in magna id aliqua enim ipsum. Voluptate qui occaecat do nulla irure occaecat veniam Lorem eu id veniam est. Culpa officia laboris voluptate ad nulla.
-
-Fugiat veniam commodo ullamco sunt aute non deserunt labore duis. Tempor aute incididunt deserunt pariatur et ad. Officia excepteur elit consequat laboris do. Nisi esse excepteur dolor officia incididunt aliquip elit culpa id. Ullamco magna minim consectetur dolor nisi magna labore enim. Cupidatat dolore veniam laborum mollit incididunt ea ad laborum ullamco voluptate in proident nulla aliquip. Duis in culpa fugiat culpa esse amet minim magna irure sint ea ipsum proident.
-                  ''';
 
   @override
   Widget build(BuildContext context) {
+
+    final List<Recipe> favorites = useAtomState$(favoriteRecipesAtomFactory.state);
+  
+  setRecipeFavorite() {
+    int indexId = favorites.indexWhere((e) => e.name == recipe.name);
+    favorites[indexId].boxIsSelected = !favorites[indexId].boxIsSelected;
+    favoriteRecipesAtomFactory.set(favorites);
+  }
+
+    // final favorites = useAtomState$(favoriteRecipesAtomFactory.state);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: myAppBar(context, 'Recipe'),
-      body: ListView(
-        // padding: EdgeInsets.all(7),
-        children: [
-          mainCard(),
-          const SizedBox(height: 20,),
-          recipeDetails(),
-          const SizedBox(height: 20,),
-          sendRecipeCard(),
-          const SizedBox(height: 20,),
-        ],
+      body: Stack(children: [
+        ListView(
+          // padding: EdgeInsets.all(7),
+          children: [
+            mainCard(),
+            const SizedBox(
+              height: 20,
+            ),
+            recipeDetails(),
+            const SizedBox(
+              height: 20,
+            ),
+            sendRecipeCard(),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ),
+        Positioned(
+            bottom: 15,
+            right: 15,
+            child: GestureDetector(
+              onTap: ()=> setRecipeFavorite(),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFEF5FF),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: 
+                  Icon(
+                    Icons.favorite_border_outlined,
+                    color: Color(0xFFFF79D9), size: 50),
+                ),
+              ),
+            )
+          )
+        ]
       ),
     );
   }
 
   Padding recipeDetails() {
-    return const Padding(
-          padding: EdgeInsets.only(left: 20, right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Recipe details:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 20,),
-              Text(
-                lorem,
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                    fontSize: 14),
-              )
-            ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Recipe details:',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-        );
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            lorem,
+            textAlign: TextAlign.justify,
+            style: const TextStyle(
+                fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
+          )
+        ],
+      ),
+    );
   }
 
   Padding sendRecipeCard() {
@@ -158,11 +195,10 @@ Fugiat veniam commodo ullamco sunt aute non deserunt labore duis. Tempor aute in
                         color: Colors.white, shape: BoxShape.circle),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child:
-                          SvgPicture.asset(recipe.iconPath),
+                      child: SvgPicture.asset(recipe.iconPath),
                     )),
                 Text(
-                  recipe.name,
+                  !recipe.favorite? recipe.name:"soy favorito",
                   style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       color: Colors.black,

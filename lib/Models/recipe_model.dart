@@ -6,8 +6,9 @@ class Recipe{
   String? duration;
   String? calorie;
   bool boxIsSelected = false;
+  bool favorite = false;
 
-  Recipe({ required this.name, required this.iconPath, required this.boxIsSelected, this.calorie, this.duration, this.level});
+  Recipe({ required this.name, required this.iconPath, required this.boxIsSelected, this.calorie, this.duration, this.level, required this.favorite});
 
   static String _getRandomString(int length) {
     const characters = 'abcdefghijklmnopqrstuvwxyz';
@@ -31,6 +32,7 @@ class Recipe{
         duration: '30mins',
         calorie: '230kCal',
         boxIsSelected: true,
+        favorite: false
       ),
     );
   }

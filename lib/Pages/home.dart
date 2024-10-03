@@ -75,7 +75,8 @@ class HomePage extends HookWidget {
             iconPath: popularModels[index].iconPath, 
             calorie: popularModels[index].calorie, 
             duration: popularModels[index].duration, 
-            boxIsSelected: popularModels[index].boxIsSelected,),
+            boxIsSelected: popularModels[index].boxIsSelected,
+            favorite: false),
           );
         },
       )
@@ -275,7 +276,8 @@ class _DietSection extends HookWidget{
                                 arguments: Recipe(
                                     name: diets[index].name,
                                     iconPath: diets[index].iconPath,
-                                    boxIsSelected: diets[index].viewIsSelected));
+                                    boxIsSelected: diets[index].viewIsSelected,
+                                    favorite: false));
                                     itemSelected.value = index;
                                     },
                             child: Text(

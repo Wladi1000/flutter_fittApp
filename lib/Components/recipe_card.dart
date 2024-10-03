@@ -10,7 +10,7 @@ class RecipeCard extends StatelessWidget {
 
   const RecipeCard({
     super.key,
-    required this.recipe
+    required this.recipe,
   });
 
   @override
@@ -61,10 +61,14 @@ class RecipeCard extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () => Modular.to.pushNamed('/recipe',
-                arguments: Recipe(
+                arguments: 
+                Recipe(
                     name: recipe.name,
                     iconPath: recipe.iconPath,
-                    boxIsSelected: recipe.boxIsSelected),),
+                    boxIsSelected: recipe.boxIsSelected,
+                    favorite: false
+                  )
+                  ),
             child: SvgPicture.asset(
               'assets/icons/button.svg',
               width: 30,

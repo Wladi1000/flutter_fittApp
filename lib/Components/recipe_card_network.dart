@@ -65,7 +65,8 @@ class RecipeCardNetwork extends StatelessWidget {
                 arguments: Recipe(
                     name: recipe.name,
                     iconPath: recipe.iconPath,
-                    boxIsSelected: recipe.boxIsSelected),),
+                    boxIsSelected: recipe.boxIsSelected,
+                    favorite: false),),
             child: SvgPicture.asset(
               'assets/icons/button.svg',
               width: 30,

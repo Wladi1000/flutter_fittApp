@@ -1,4 +1,5 @@
 // Dependencies
+import 'package:fitness/store/store.dart';
 import 'package:flutter/material.dart';
 
 //Models
@@ -7,15 +8,18 @@ import 'package:fitness/Models/recipe_model.dart';
 // Components
 import 'package:fitness/Components/app_bar.dart';
 import 'package:fitness/Components/recipe_card.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class CategoryRecipePage extends StatelessWidget {
+// Store
+import 'package:fitness/store/atoms.dart';
+
+class CategoryRecipePage extends HookWidget {
   final String categoria;
-  CategoryRecipePage({super.key, required this.categoria});
-
-  final List<Recipe> recipesSelected = Recipe.getRecipesList();
+  const CategoryRecipePage({super.key, required this.categoria});
 
   @override
   Widget build(BuildContext context) {
+    final List<Recipe> recipesSelected = useAtomState$(favoriteRecipesAtomFactory.state);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: myAppBar(context, categoria),
@@ -34,9 +38,9 @@ class CategoryRecipePage extends StatelessWidget {
                 calorie: recipesSelected[index].calorie,
                 duration: recipesSelected[index].duration,
                 boxIsSelected: recipesSelected[index].boxIsSelected,
-                level: recipesSelected[index].level
-              ),
-            
+                level: recipesSelected[index].level,
+                favorite: false
+              )
           );
         },
       ),
