@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:fitness/Models/category_model.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 // ignore: depend_on_referenced_packages
@@ -140,7 +140,8 @@ class _CategoriesSection extends HookWidget {
     final futureRecipes = useMemoized(() async {
       final recipes = await rootBundle.loadString('assets/data/Categories.json');
       final data = await json.decode(recipes) as List;
-      return data.map((item) => CategoryModel.fromJson(item)).toList();
+      final dataList = data.map((item) => CategoryModel.fromJson(item)).toList();
+      return dataList;
     });
 
     final snapshot = useFuture(futureRecipes);
@@ -163,7 +164,8 @@ class _CategoriesSection extends HookWidget {
           height: 120,
           child: snapshot.connectionState == ConnectionState.waiting
           ? const Center(child: CircularProgressIndicator())
-          : ListView.separated(
+          :
+          ListView.separated(
             itemCount: snapshot.data?.length ?? 0,
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.only(left: 20, right: 20),
@@ -174,7 +176,7 @@ class _CategoriesSection extends HookWidget {
               return GestureDetector(
                 onTap: () => Modular.to.pushNamed(
                   '/category',
-                  arguments: snapshot.data?[index].name
+                  arguments: snapshot.data?[index]
                 ),
                 child: Container(
                   width: 100,
