@@ -27,4 +27,15 @@ class Recipe {
       level: json['level'],
       favorite: json['favorite'],
       categoryId: json['categoryId']);
+
+  Map<String, dynamic> toJson() => {
+      'name': name,
+      'iconPath': iconPath,
+      'boxIsSelected': boxIsSelected,
+      'calorie': calorie,
+      'duration': duration,
+      'level': level,
+      'favorite': favorite,
+      'categoryId': categoryId,
+  };
 }

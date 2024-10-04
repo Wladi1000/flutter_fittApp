@@ -1,8 +1,8 @@
 // import 'package:asp/asp.dart';
-import 'package:fitness/Models/recipe_model.dart';
+// import 'package:fitness/Models/recipe_model.dart';
 import 'atoms.dart';
 
-AtomFactory<List<Recipe>> favoriteRecipesAtomFactory = AtomFactory<List<Recipe>>(
-  'favoritesRecipes',
-  [],
+AtomFactory<bool> favoriteRecipe = AtomFactory<bool>(
+  'favorite',
+  false,
 );

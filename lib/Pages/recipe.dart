@@ -1,4 +1,5 @@
 // Dependencies
+// import 'package:fitness/store/store.dart';
 import 'package:fitness/store/store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -22,16 +23,14 @@ class RecipePage extends HookWidget {
   Recipe recipe;
   RecipePage({super.key, required this.recipe});
 
-
   @override
   Widget build(BuildContext context) {
 
-    final List<Recipe> favorites = useAtomState$(favoriteRecipesAtomFactory.state);
   
+  final favorite = useAtomState$(favoriteRecipe.state);
+
   setRecipeFavorite() {
-    int indexId = favorites.indexWhere((e) => e.name == recipe.name);
-    favorites[indexId].boxIsSelected = !favorites[indexId].boxIsSelected;
-    favoriteRecipesAtomFactory.set(favorites);
+    favoriteRecipe.set(!favorite);
   }
 
     // final favorites = useAtomState$(favoriteRecipesAtomFactory.state);
@@ -66,12 +65,19 @@ class RecipePage extends HookWidget {
                   color: const Color(0xFFFEF5FF),
                   borderRadius: BorderRadius.circular(100),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: 
-                  Icon(
-                    Icons.favorite_border_outlined,
-                    color: Color(0xFFFF79D9), size: 50),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: favorite
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Color(0xFFFF79D9),
+                          size: 50,
+                        )
+                      : const Icon(
+                          Icons.favorite_border_outlined,
+                          color: Color(0xFFFF79D9),
+                          size: 50,
+                        ),
                 ),
               ),
             )
