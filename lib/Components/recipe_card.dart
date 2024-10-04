@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -66,7 +67,8 @@ class RecipeCard extends StatelessWidget {
                     name: recipe.name,
                     iconPath: recipe.iconPath,
                     boxIsSelected: recipe.boxIsSelected,
-                    favorite: false
+                    favorite: false,
+                    categoryId: recipe.categoryId
                   )
                   ),
             child: SvgPicture.asset(

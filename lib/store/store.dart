@@ -4,5 +4,5 @@ import 'atoms.dart';
 
 AtomFactory<List<Recipe>> favoriteRecipesAtomFactory = AtomFactory<List<Recipe>>(
   'favoritesRecipes',
-  Recipe.getRecipesList(),
+  [],
 );

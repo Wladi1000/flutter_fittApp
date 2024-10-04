@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 String lorem = '''
 Velit esse do veniam dolor minim ullamco. Elit Lorem in est ullamco laboris eu nisi elit. Dolore id aute nostrud est eiusmod ipsum occaecat ad nostrud Lorem.
 

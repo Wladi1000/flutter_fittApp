@@ -1,10 +1,16 @@
+import 'dart:convert';
+import 'package:fitness/Models/category_model.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+// JSON
+// import '../../assets/data/Recipes.json' as recipes_json;
+// import 'package:fitness/Data/Categories.json' as categories;
 // Modelos
-import 'package:fitness/Models/category_model.dart';
+// import 'package:fitness/Models/category_model.dart';
 import 'package:fitness/Models/diet_model.dart';
 import 'package:fitness/Models/popular_model.dart';
 import 'package:fitness/Models/recipe_model.dart';
@@ -16,12 +22,12 @@ class HomePage extends HookWidget {
 
   HomePage({super.key});
 
-  final List<CategoryModel> categories = CategoryModel.getCategories();
+  // final List<CategoryModel> categories = CategoryModel.getCategories();
   final List<DietModel> diets = DietModel.getDiets();
   final List<PopularDietsModel> popularModels = PopularDietsModel.getPopularDiets();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
 
     return Scaffold(
       appBar: myAppBar(context, 'Breakfast'),
@@ -30,7 +36,7 @@ class HomePage extends HookWidget {
         children: [
           _searchField(),
           const SizedBox(height: 40,),
-          _categoriesSection(),
+          const _CategoriesSection(),
           const SizedBox(height: 40,),
           _DietSection(diets: diets,),
           const SizedBox(height: 40,),
@@ -69,77 +75,12 @@ class HomePage extends HookWidget {
             duration: popularModels[index].duration, 
             boxIsSelected: popularModels[index].boxIsSelected,
             level: popularModels[index].level,
-            favorite: false),
+            favorite: false,
+            categoryId: 0),
           );
         },
       )
     ]);
-  }
-
-  Column _categoriesSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 20),
-          child: Text(
-            'Category',
-            style: TextStyle(
-                color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        SizedBox(
-          height: 120,
-          child: ListView.separated(
-            itemCount: categories.length,
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            separatorBuilder: (context, index) => const SizedBox(
-              width: 25,
-            ),
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () => Modular.to.pushNamed(
-                  '/category',
-                  arguments: categories[index].name
-                ),
-                child: Container(
-                  width: 100,
-                  decoration: BoxDecoration(
-                      color: categories[index].boxColor.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(16)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                            color: Colors.white, shape: BoxShape.circle),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SvgPicture.asset(categories[index].iconPath),
-                        ),
-                      ),
-                      Text(
-                        categories[index].name,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                            fontSize: 14),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        )
-      ],
-    );
   }
 
   Container _searchField() {
@@ -186,6 +127,88 @@ class HomePage extends HookWidget {
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide.none)),
       ),
+    );
+  }
+}
+
+class _CategoriesSection extends HookWidget {
+  const _CategoriesSection();
+
+  @override
+  Widget build(BuildContext context) {
+
+    final futureRecipes = useMemoized(() async {
+      final recipes = await rootBundle.loadString('assets/data/Categories.json');
+      final data = await json.decode(recipes) as List;
+      return data.map((item) => CategoryModel.fromJson(item)).toList();
+    });
+
+    final snapshot = useFuture(futureRecipes);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Text(
+            'Category',
+            style: TextStyle(
+                color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        SizedBox(
+          height: 120,
+          child: snapshot.connectionState == ConnectionState.waiting
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.separated(
+            itemCount: snapshot.data?.length ?? 0,
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            separatorBuilder: (context, index) => const SizedBox(
+              width: 25,
+            ),
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () => Modular.to.pushNamed(
+                  '/category',
+                  arguments: snapshot.data?[index].name
+                ),
+                child: Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: Colors.amber.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(16)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: const BoxDecoration(
+                            color: Colors.white, shape: BoxShape.circle),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SvgPicture.asset(snapshot.data![index].iconPath),
+                        ),
+                      ),
+                      Text(
+                        snapshot.data![index].name,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                            fontSize: 14),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        )
+      ],
     );
   }
 }
@@ -270,7 +293,8 @@ class _DietSection extends HookWidget{
                                     name: diets[index].name,
                                     iconPath: diets[index].iconPath,
                                     boxIsSelected: diets[index].viewIsSelected,
-                                    favorite: false));
+                                    favorite: false,
+                                    categoryId: 0));
                                     itemSelected.value = index;
                                     },
                             child: Text(

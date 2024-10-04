@@ -39,7 +39,8 @@ class CategoryRecipePage extends HookWidget {
                 duration: recipesSelected[index].duration,
                 boxIsSelected: recipesSelected[index].boxIsSelected,
                 level: recipesSelected[index].level,
-                favorite: false
+                favorite: false,
+                categoryId: recipesSelected[index].categoryId
               )
           );
         },
