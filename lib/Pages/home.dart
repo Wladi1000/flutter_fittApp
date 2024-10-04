@@ -29,21 +29,13 @@ class HomePage extends HookWidget {
       body: ListView(
         children: [
           _searchField(),
-          const SizedBox(
-            height: 40,
-          ),
+          const SizedBox(height: 40,),
           _categoriesSection(),
-          const SizedBox(
-            height: 40,
-          ),
+          const SizedBox(height: 40,),
           _DietSection(diets: diets,),
-          const SizedBox(
-            height: 40,
-          ),
+          const SizedBox(height: 40,),
           _popularSection(),
-          const SizedBox(
-            height: 40,
-          ),
+          const SizedBox(height: 40,),
         ],
       ),
     );
@@ -76,6 +68,7 @@ class HomePage extends HookWidget {
             calorie: popularModels[index].calorie, 
             duration: popularModels[index].duration, 
             boxIsSelected: popularModels[index].boxIsSelected,
+            level: popularModels[index].level,
             favorite: false),
           );
         },
