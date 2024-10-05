@@ -18,6 +18,18 @@ class DietModel{
     required this.viewIsSelected
   });
 
+  factory DietModel.fromJson(Map<String, dynamic> json) {
+    return DietModel(
+      name: json['name'],
+      iconPath: json['iconPath'],
+      level: json['level'],
+      duration: json['duration'],
+      calorie: json['calorie'],
+      boxColor: Color(json['boxColor']),
+      viewIsSelected: json['viewIsSelected'],
+    );
+  }
+
   static List< DietModel > getDiets(){
     List < DietModel > diets = [];
 

@@ -15,6 +15,17 @@ class PopularDietsModel{
     required this.boxIsSelected
   });
 
+  factory PopularDietsModel.fromJson(Map<String, dynamic> json) {
+    return PopularDietsModel(
+      name: json['name'],
+      iconPath: json['iconPath'],
+      level: json['level'],
+      duration: json['duration'],
+      calorie: json['calorie'],
+      boxIsSelected: json['boxIsSelected'],
+    );
+  }
+
   static List < PopularDietsModel > getPopularDiets(){
     List < PopularDietsModel > popularDiets = [];
 

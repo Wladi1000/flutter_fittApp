@@ -31,8 +31,8 @@ class CategoryRecipePage extends HookWidget {
     });
 
     final snapshot = useFuture(futureRecipes);
-    final recipes = snapshot.data?? [];
-    final recipesSelected = recipes.where((recipe) => recipe.categoryId == categoria.id).toList();
+    // final recipes = snapshot.data?? [];
+    final recipesSelected = [];
 
     return Scaffold(
       backgroundColor: Colors.white,

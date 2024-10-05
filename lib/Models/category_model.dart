@@ -1,18 +1,18 @@
 class CategoryModel{
   int id;
   String name;
-  String iconPath;
+  String image;
 
   CategoryModel({
     required this.id,
     required this.name,
-    required this.iconPath
+    required this.image
   });
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
       id: json['id'],
       name: json['name'],
-      iconPath: json['iconPath'],
+      image: json['image'],
     );
   }
 }
