@@ -5,8 +5,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 // Models
 import 'package:fitness/Models/recipe_model.dart';
-class RecipeCard extends StatelessWidget {
 
+class RecipeCard extends StatelessWidget {
   final Recipe recipe;
 
   const RecipeCard({
@@ -19,24 +19,22 @@ class RecipeCard extends StatelessWidget {
     return Container(
       height: 100,
       decoration: BoxDecoration(
-          color: recipe.boxIsSelected
-              ? Colors.white
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: recipe.boxIsSelected
-              ? [
-                  BoxShadow(
-                      color: const Color(0xff1d1617).withOpacity(0.07),
-                      offset: const Offset(0, 10),
-                      blurRadius: 40,
-                      spreadRadius: 0)
-                ]
-              : []),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xff1d1617).withOpacity(0.07),
+            offset: const Offset(0, 10),
+            blurRadius: 40,
+            spreadRadius: 0,
+          ),
+        ],
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SvgPicture.asset(
-            recipe.iconPath,
+          Image.network(
+            recipe.image,
             width: 65,
             height: 65,
           ),
@@ -52,7 +50,7 @@ class RecipeCard extends StatelessWidget {
                     fontSize: 16),
               ),
               Text(
-                '${recipe.level} | ${recipe.duration} | ${recipe.calorie}',
+                '${recipe.difficulty} | ${recipe.cookTimeMinutes}mins | ${recipe.caloriesPerServing}Kcal',
                 style: const TextStyle(
                     color: Color(0xff7b6f72),
                     fontSize: 13,
@@ -61,17 +59,11 @@ class RecipeCard extends StatelessWidget {
             ],
           ),
           GestureDetector(
-            onTap: () => Modular.to.pushNamed('/recipe',
-                arguments: 
-                Recipe(
-                    name: recipe.name,
-                    iconPath: recipe.iconPath,
-                    boxIsSelected: recipe.boxIsSelected,
-                    favorite: false,
-                    categoryId: recipe.categoryId
-                  )
-                  ),
-            child: SvgPicture.asset(
+            onTap: 
+            () => Modular.to.pushNamed('/recipe',arguments: recipe
+            ),
+            child: 
+            SvgPicture.asset(
               'assets/icons/button.svg',
               width: 30,
               height: 30,

@@ -1,13 +1,7 @@
 // Dependencies
-// import 'package:fitness/store/store.dart';
 import 'package:fitness/store/store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-// ignore: depend_on_referenced_packages
-import 'package:flutter_svg/flutter_svg.dart';
-
-// Utils
-import 'package:fitness/utils/loremIpsum.dart';
 
 // Components
 import 'package:fitness/Components/app_bar.dart';
@@ -25,13 +19,11 @@ class RecipePage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final favorite = useAtomState$(favoriteRecipe.state);
 
-  
-  final favorite = useAtomState$(favoriteRecipe.state);
-
-  setRecipeFavorite() {
-    favoriteRecipe.set(!favorite);
-  }
+    setRecipeFavorite() {
+      favoriteRecipe.set(!favorite);
+    }
 
     // final favorites = useAtomState$(favoriteRecipesAtomFactory.state);
     return Scaffold(
@@ -59,7 +51,7 @@ class RecipePage extends HookWidget {
             bottom: 15,
             right: 15,
             child: GestureDetector(
-              onTap: ()=> setRecipeFavorite(),
+              onTap: () => setRecipeFavorite(),
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color(0xFFFEF5FF),
@@ -80,34 +72,70 @@ class RecipePage extends HookWidget {
                         ),
                 ),
               ),
-            )
-          )
-        ]
-      ),
+            ))
+      ]),
     );
   }
 
   Padding recipeDetails() {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Recipe details:',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            lorem,
-            textAlign: TextAlign.justify,
-            style: const TextStyle(
-                fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14),
-          )
-        ],
-      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const Text(
+          'Recipe details:',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          'Ingredients:',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        ...recipe.ingredients.map((e) => Row(
+              children: [
+                const Icon(Icons.check),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  e,
+                  textAlign: TextAlign.justify,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                      fontSize: 14),
+                ),
+              ],
+            )),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          'Instructions:',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        Column(
+          children: [
+            ...recipe.instructions.map((e) => Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.circle_outlined, size: 10,),
+                const SizedBox(width: 10,),
+                Expanded(
+                  child: Text(
+                    e,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                        fontSize: 14),
+                  ),
+                ),
+              ],
+            ))
+          ],
+        )
+      ]),
     );
   }
 
@@ -201,10 +229,10 @@ class RecipePage extends HookWidget {
                         color: Colors.white, shape: BoxShape.circle),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: SvgPicture.asset(recipe.iconPath),
+                      child: Image.network(recipe.image),
                     )),
                 Text(
-                  !recipe.favorite? recipe.name:"soy favorito",
+                  !recipe.favorite ? recipe.name : "soy favorito",
                   style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       color: Colors.black,

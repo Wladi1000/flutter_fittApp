@@ -7,14 +7,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 // Modelos
 import 'package:fitness/Models/diet_model.dart';
 import 'package:fitness/Models/popular_model.dart';
-import 'package:fitness/Models/recipe_model.dart';
+// import 'package:fitness/Models/recipe_model.dart';
 
 // Components
 import 'package:fitness/Components/app_bar.dart';
-import 'package:fitness/Components/recipe_card.dart';
+// import 'package:fitness/Components/recipe_card.dart';
 
 // Sections
-import 'package:fitness/Sections/home/diet_section.dart';
+// import 'package:fitness/Sections/home/diet_section.dart';
 import 'package:fitness/Sections/home/category_section.dart';
 
 class HomePage extends HookWidget {
@@ -37,50 +37,50 @@ class HomePage extends HookWidget {
           const SizedBox(height: 40,),
           const CategoriesSection(),
           const SizedBox(height: 40,),
-          DietSection(diets: diets),
+          // DietSection(diets: diets),
           const SizedBox(height: 40,),
-          _popularSection(),
+          // _popularSection(),
           const SizedBox(height: 40,),
         ],
       ),
     );
   }
 
-  Column _popularSection() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Padding(
-        padding: EdgeInsets.only(left: 20),
-        child: Text(
-          'Popular',
-          style: TextStyle(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
-        ),
-      ),
-      const SizedBox(
-        height: 15,
-      ),
-      ListView.separated(
-        shrinkWrap: true,
-        separatorBuilder: (context, index) => const SizedBox(
-          height: 15,
-        ),
-        itemCount: popularModels.length,
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        itemBuilder: (context, index) {
-          return RecipeCard(recipe: Recipe(
-            name: popularModels[index].name, 
-            iconPath: popularModels[index].iconPath, 
-            calorie: popularModels[index].calorie, 
-            duration: popularModels[index].duration, 
-            boxIsSelected: popularModels[index].boxIsSelected,
-            level: popularModels[index].level,
-            favorite: false,
-            categoryId: 0),
-          );
-        },
-      )
-    ]);
-  }
+  // Column _popularSection() {
+  //   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  //     const Padding(
+  //       padding: EdgeInsets.only(left: 20),
+  //       child: Text(
+  //         'Popular',
+  //         style: TextStyle(
+  //             color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
+  //       ),
+  //     ),
+  //     const SizedBox(
+  //       height: 15,
+  //     ),
+  //     ListView.separated(
+  //       shrinkWrap: true,
+  //       separatorBuilder: (context, index) => const SizedBox(
+  //         height: 15,
+  //       ),
+  //       itemCount: popularModels.length,
+  //       padding: const EdgeInsets.only(left: 15, right: 15),
+  //       itemBuilder: (context, index) {
+  //         return RecipeCard(recipe: Recipe(
+  //           name: popularModels[index].name, 
+  //           iconPath: popularModels[index].iconPath, 
+  //           calorie: popularModels[index].calorie, 
+  //           duration: popularModels[index].duration, 
+  //           boxIsSelected: popularModels[index].boxIsSelected,
+  //           level: popularModels[index].level,
+  //           favorite: false,
+  //           categoryId: 0),
+  //         );
+  //       },
+  //     )
+  //   ]);
+  // }
 
   Container _searchField() {
     return Container(

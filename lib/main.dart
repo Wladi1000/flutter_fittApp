@@ -5,6 +5,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fitness/Pages/home.dart';
 import 'package:fitness/Pages/recipe.dart';
 import 'package:fitness/Pages/category_recipes_page.dart';
+import 'package:fquery/fquery.dart';
 
 void main() {
   return runApp(ModularApp(module: AppModule(), child: const AppWidget()));
@@ -15,11 +16,14 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'My Food Fitness App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      routerConfig: Modular.routerConfig,
-      debugShowCheckedModeBanner: false,
+    return QueryClientProvider(
+      queryClient: QueryClient(),
+      child: MaterialApp.router(
+        title: 'My Food Fitness App',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        routerConfig: Modular.routerConfig,
+        debugShowCheckedModeBanner: false,
+      ),
     ); //added by extension
   }
 }
