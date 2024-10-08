@@ -28,7 +28,7 @@ class RecipePage extends HookWidget {
     // final favorites = useAtomState$(favoriteRecipesAtomFactory.state);
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: myAppBar(context, 'Recipe'),
+      appBar: myAppBar(context, 'Recipe', true),
       body: Stack(children: [
         ListView(
           // padding: EdgeInsets.all(7),

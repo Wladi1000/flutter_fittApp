@@ -29,7 +29,7 @@ class HomePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(context, 'Breakfast'),
+      appBar: myAppBar(context, 'Breakfast', false),
       backgroundColor: Colors.white,
       body: ListView(
         children: [

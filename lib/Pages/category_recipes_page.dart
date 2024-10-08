@@ -45,7 +45,7 @@ class CategoryRecipePage extends HookWidget {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: myAppBar(context, categoria.name),
+        appBar: myAppBar(context, categoria.name, false),
         body: ListView.separated(
             shrinkWrap: true,
             separatorBuilder: (context, index) => const SizedBox(
