@@ -1,4 +1,5 @@
 // Dependencies
+import 'package:fitness/Sections/home/popular_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 // ignore: depend_on_referenced_packages
@@ -14,73 +15,44 @@ import 'package:fitness/Components/app_bar.dart';
 // import 'package:fitness/Components/recipe_card.dart';
 
 // Sections
-// import 'package:fitness/Sections/home/diet_section.dart';
+import 'package:fitness/Sections/home/diet_section.dart';
 import 'package:fitness/Sections/home/category_section.dart';
 
 class HomePage extends HookWidget {
-
   HomePage({super.key});
 
   // final List<CategoryModel> categories = CategoryModel.getCategories();
   final List<DietModel> diets = DietModel.getDiets();
-  final List<PopularDietsModel> popularModels = PopularDietsModel.getPopularDiets();
+  final List<PopularDietsModel> popularModels =
+      PopularDietsModel.getPopularDiets();
 
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar(context, 'Breakfast'),
       backgroundColor: Colors.white,
       body: ListView(
         children: [
           _searchField(),
-          const SizedBox(height: 40,),
+          const SizedBox(
+            height: 40,
+          ),
           const CategoriesSection(),
-          const SizedBox(height: 40,),
-          // DietSection(diets: diets),
-          const SizedBox(height: 40,),
-          // _popularSection(),
-          const SizedBox(height: 40,),
+          const SizedBox(
+            height: 40,
+          ),
+          DietSection(diets: diets),
+          const SizedBox(
+            height: 40,
+          ),
+          const PopularSection(),
+          const SizedBox(
+            height: 40,
+          ),
         ],
       ),
     );
   }
-
-  // Column _popularSection() {
-  //   return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-  //     const Padding(
-  //       padding: EdgeInsets.only(left: 20),
-  //       child: Text(
-  //         'Popular',
-  //         style: TextStyle(
-  //             color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
-  //       ),
-  //     ),
-  //     const SizedBox(
-  //       height: 15,
-  //     ),
-  //     ListView.separated(
-  //       shrinkWrap: true,
-  //       separatorBuilder: (context, index) => const SizedBox(
-  //         height: 15,
-  //       ),
-  //       itemCount: popularModels.length,
-  //       padding: const EdgeInsets.only(left: 15, right: 15),
-  //       itemBuilder: (context, index) {
-  //         return RecipeCard(recipe: Recipe(
-  //           name: popularModels[index].name, 
-  //           iconPath: popularModels[index].iconPath, 
-  //           calorie: popularModels[index].calorie, 
-  //           duration: popularModels[index].duration, 
-  //           boxIsSelected: popularModels[index].boxIsSelected,
-  //           level: popularModels[index].level,
-  //           favorite: false,
-  //           categoryId: 0),
-  //         );
-  //       },
-  //     )
-  //   ]);
-  // }
 
   Container _searchField() {
     return Container(

@@ -227,12 +227,10 @@ class RecipePage extends HookWidget {
                     width: 100,
                     decoration: const BoxDecoration(
                         color: Colors.white, shape: BoxShape.circle),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.network(recipe.image),
-                    )),
+                    child: Container(height: 60,width: 60,decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),image: DecorationImage(image: NetworkImage(recipe.image), fit: BoxFit.fill))),     
+                    ),
                 Text(
-                  !recipe.favorite ? recipe.name : "soy favorito",
+                  recipe.name,
                   style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       color: Colors.black,

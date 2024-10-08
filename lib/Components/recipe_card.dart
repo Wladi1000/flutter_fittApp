@@ -1,3 +1,4 @@
+// Dependencies
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
@@ -33,17 +34,14 @@ class RecipeCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Image.network(
-            recipe.image,
-            width: 65,
-            height: 65,
-          ),
+          Container(height: 60,width: 60,decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),image: DecorationImage(image: NetworkImage(recipe.image), fit: BoxFit.fill))),     
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 recipe.name,
+                textAlign: TextAlign.justify,
                 style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black,

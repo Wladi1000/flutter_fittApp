@@ -1,0 +1,68 @@
+// Dependencies
+import 'dart:convert';
+import 'package:fitness/Models/recipe_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fquery/fquery.dart';
+
+// Components
+import 'package:fitness/Components/recipe_card.dart';
+
+class PopularSection extends HookWidget {
+  const PopularSection({
+    super.key,
+  });
+  
+  get http => null;
+
+  Future<List<Recipe>> getPopularRecipiesByTag() async {
+    final recipes =
+        await http.get(Uri.parse('https://dummyjson.com/recipes/tag/Mango'));
+    if (recipes.statusCode == 200) {
+      final data = jsonDecode(recipes.body);
+      return (data['recipes'] as List)
+          .map((i) => Recipe.fromJson(i))
+          .toList();
+    } else {
+      throw Exception('Failed to load recipes');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final recipes = useQuery(['PopularRecipes'], getPopularRecipiesByTag);
+
+    if (recipes.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (recipes.isError) {
+      return Center(child: Text(recipes.error!.toString()));
+    }
+
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Padding(
+        padding: EdgeInsets.only(left: 20),
+        child: Text(
+          'Popular',
+          style: TextStyle(
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
+        ),
+      ),
+      const SizedBox(
+        height: 15,
+      ),
+      ListView.separated(
+        shrinkWrap: true,
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 15,
+        ),
+        itemCount: recipes.data!.length,
+        padding: const EdgeInsets.only(left: 15, right: 15),
+        itemBuilder: (context, index) {
+          return RecipeCard(recipe: recipes.data![index]);
+        },
+      )
+    ]);
+  }
+}

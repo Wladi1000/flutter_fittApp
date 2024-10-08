@@ -122,17 +122,11 @@ class CategoriesSection extends HookWidget {
                       height: 50,
                       decoration: const BoxDecoration(
                           color: Colors.white, shape: BoxShape.circle),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: dietCategory.value.isEmpty
+                      child: dietCategory.value.isEmpty
                         ? const Center(child: CircularProgressIndicator())
                         :
-                        Image.network(
-                            dietCategory.value[index].image,
-                          fit: BoxFit.fill,
-                        ),
+                        Container(height: 60,width: 60,decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),image: DecorationImage(image: NetworkImage(dietCategory.value[index].image), fit: BoxFit.fill))),
                       ),
-                    ),
                     Text(
                       dietCategory.value[index].name,
                       style: const TextStyle(
