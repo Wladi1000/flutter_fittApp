@@ -115,7 +115,7 @@ class DietSection extends HookWidget{
                         child: Center(
                           child: TextButton(
                             onPressed: (){Modular.to.pushNamed('/recipe',
-                                arguments: recipe1);},
+                                arguments: recipe1.data);},
                             child: Text(
                               'View',
                               style: TextStyle(
