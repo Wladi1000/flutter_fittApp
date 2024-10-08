@@ -1,9 +1,12 @@
 // Dependencies
 import 'dart:convert';
-import 'package:fitness/Models/recipe_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fquery/fquery.dart';
+import 'package:http/http.dart' as http;
+
+// Models
+import 'package:fitness/Models/recipe_model.dart';
 
 // Components
 import 'package:fitness/Components/recipe_card.dart';
@@ -12,8 +15,6 @@ class PopularSection extends HookWidget {
   const PopularSection({
     super.key,
   });
-  
-  get http => null;
 
   Future<List<Recipe>> getPopularRecipiesByTag() async {
     final recipes =
