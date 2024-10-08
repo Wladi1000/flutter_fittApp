@@ -18,7 +18,7 @@ class PopularSection extends HookWidget {
 
   Future<List<Recipe>> getPopularRecipiesByTag() async {
     final recipes =
-        await http.get(Uri.parse('https://dummyjson.com/recipes/tag/Mango'));
+        await http.get(Uri.parse('https://dummyjson.com/recipes/tag/Stir-fry'));
     if (recipes.statusCode == 200) {
       final data = jsonDecode(recipes.body);
       return (data['recipes'] as List)
@@ -53,17 +53,10 @@ class PopularSection extends HookWidget {
       const SizedBox(
         height: 15,
       ),
-      ListView.separated(
-        shrinkWrap: true,
-        separatorBuilder: (context, index) => const SizedBox(
-          height: 15,
-        ),
-        itemCount: recipes.data!.length,
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        itemBuilder: (context, index) {
-          return RecipeCard(recipe: recipes.data![index]);
-        },
-      )
+      ...recipes.data!.map((recipe) => Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+        child: RecipeCard(recipe: recipe),
+      ))
     ]);
   }
 }
